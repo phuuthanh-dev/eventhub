@@ -25,7 +25,7 @@ export const globalStyles = StyleSheet.create({
     flexDirection: "row",
   },
   shadow: {
-    shadowColor: 'rgba(0,0,0,0.5)',
+    shadowColor: "rgba(0,0,0,0.5)",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -40,8 +40,31 @@ export const globalStyles = StyleSheet.create({
     paddingBottom: 20,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#3D56F0",
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+  },
+
+  tag: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: appColors.white,
+    borderRadius: 100,
+    marginRight: 12,
+  },
+
+  card: {
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: appColors.white,
+    margin: 12,
   },
 });

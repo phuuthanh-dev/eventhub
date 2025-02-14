@@ -10,14 +10,8 @@ import { useDispatch } from 'react-redux'
 import { addAuth } from '../../redux/reducers/authReducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-interface ErrorMessages {
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
-
 const initValue = {
-    username: '',
+    fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -55,7 +49,7 @@ const SignUpScreen = ({ navigation }: any) => {
 
         setValues(data);
     };
-
+    
     const formValidator = (key: string) => {
         const data = { ...errorMessage };
         let message = ``;
@@ -69,7 +63,6 @@ const SignUpScreen = ({ navigation }: any) => {
                 } else {
                     message = '';
                 }
-
                 break;
 
             case 'password':
@@ -84,7 +77,6 @@ const SignUpScreen = ({ navigation }: any) => {
                 } else {
                     message = '';
                 }
-
                 break;
         }
 
@@ -94,20 +86,17 @@ const SignUpScreen = ({ navigation }: any) => {
     };
 
     const handleRegister = async () => {
-        const { email, password, confirmPassword } = values;
         setIsLoading(true);
         try {
             const res = await authenticationAPI.HandleAuthentication(
-                '/register',
-                {
-                    fullName: values.username,
-                    email,
-                    password,
-                },
+                '/verification',
+                { email: values.email },
                 'post');
-            dispatch(addAuth(res.data))
-            await AsyncStorage.setItem('auth', JSON.stringify(res.data));
             setIsLoading(false);
+            navigation.navigate('Verification', {
+                code: res.data.code,
+                ...values,
+            });
         } catch (error) {
             console.log(error);
             setIsLoading(false);
@@ -121,9 +110,9 @@ const SignUpScreen = ({ navigation }: any) => {
                     <TextComponent size={24} title text="Sign up" />
                     <SpaceComponent height={21} />
                     <InputComponent
-                        value={values.username}
+                        value={values.fullName}
                         placeholder="Full name"
-                        onChange={val => handleChangeValue('username', val)}
+                        onChange={val => handleChangeValue('fullName', val)}
                         allowClear
                         affix={<User size={22} color={appColors.gray} />}
                     />
@@ -174,7 +163,7 @@ const SignUpScreen = ({ navigation }: any) => {
                     <ButtonComponent
                         onPress={handleRegister}
                         text="SIGN UP"
-                        // disable={isDisable}
+                        disable={isDisable}
                         type="primary"
                     />
                 </SectionComponent>

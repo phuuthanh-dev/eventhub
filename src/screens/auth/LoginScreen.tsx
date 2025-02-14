@@ -1,5 +1,5 @@
-import { View, Text, Image, Switch } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image, Switch, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { globalStyles } from '../../styles/globalStyles'
 import { ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
 import { Lock, Sms } from 'iconsax-react-native'
@@ -9,29 +9,47 @@ import SocialLogin from './components/SocialLogin'
 import authenticationAPI from '../../apis/authApi'
 import { useDispatch } from 'react-redux'
 import { addAuth } from '../../redux/reducers/authReducer'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage'
+import { Validate } from '../../utils/validate'
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isRemember, setIsRemember] = useState(true)
+  const { getItem } = useAsyncStorage('auth');
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    checkEmailStorage();
+  }, []);
+
+  const checkEmailStorage = async () => {
+    const authData = await getItem();
+    if (authData) {
+      setEmail(JSON.parse(authData)?.email);
+    }
+  }
+
   const handleLogin = async () => {
-    try {
-      const res = await authenticationAPI.HandleAuthentication(
-        '/login',
-        { email, password },
-        'post',
-      );
-      dispatch(addAuth(res.data));
-      await AsyncStorage.setItem(
-        'auth',
-        isRemember ? JSON.stringify(res.data) : email,
-      );
-    } catch (error) {
-      console.log(error);
+    const emailValidation = Validate.email(email);
+    if (emailValidation) {
+      try {
+        const res = await authenticationAPI.HandleAuthentication(
+          '/login',
+          { email, password },
+          'post',
+        );
+        dispatch(addAuth(res.data));
+        await AsyncStorage.setItem(
+          'auth',
+          isRemember ? JSON.stringify(res.data) : email,
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Alert.alert('Email is not correct!');
     }
   }
 
@@ -76,6 +94,7 @@ const LoginScreen = ({ navigation }: any) => {
               thumbColor={appColors.white}
               value={isRemember}
               onValueChange={() => setIsRemember(!isRemember)} />
+            <SpaceComponent width={4} />
             <TextComponent text='Remember me' />
           </RowComponent>
           <ButtonComponent
