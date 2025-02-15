@@ -1,11 +1,12 @@
-import { View, Text, ImageBackground, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, ImageBackground, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { ReactNode } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../styles/globalStyles';
 import { fontFamilies } from '../constants/fontFamilies';
 import { ArrowLeft } from 'iconsax-react-native';
 import { appColors } from '../constants/appColors';
-import { RowComponent, TextComponent } from '.';
+import RowComponent from './RowComponent';
+import TextComponent from './TextComponent';
 
 interface Props {
     isImageBackground?: boolean;

@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { removeAuth } from '../../redux/reducers/authReducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const HomeScreen = () => {
             parsedAuth.accessToken = '';
             await AsyncStorage.setItem('auth', JSON.stringify(parsedAuth));
           }
+          await GoogleSignin.signOut();
           dispatch(removeAuth({}))
         }}
       />

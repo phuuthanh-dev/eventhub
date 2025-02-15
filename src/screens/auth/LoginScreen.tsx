@@ -16,6 +16,7 @@ const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isRemember, setIsRemember] = useState(true)
+  const [isDisable, setIsDisable] = useState(true)
   const { getItem } = useAsyncStorage('auth');
 
   const dispatch = useDispatch();
@@ -24,10 +25,21 @@ const LoginScreen = ({ navigation }: any) => {
     checkEmailStorage();
   }, []);
 
+  useEffect(() => {
+    const emailValidation = Validate.email(email);
+
+    if (!email || !password || !emailValidation) {
+      setIsDisable(true);
+    } else {
+      setIsDisable(false);
+    }
+  }, [email, password]);
+
   const checkEmailStorage = async () => {
     const authData = await getItem();
     if (authData) {
-      setEmail(JSON.parse(authData)?.email);
+      const parsedData = JSON.parse(authData);
+      parsedData.email && setEmail(parsedData.email);
     }
   }
 
@@ -107,6 +119,7 @@ const LoginScreen = ({ navigation }: any) => {
       <SpaceComponent height={16} />
       <SectionComponent>
         <ButtonComponent
+          disable={isDisable}
           text='SIGN IN'
           onPress={handleLogin}
           type='primary'
