@@ -7,8 +7,6 @@ import { LoadingModal } from '../../modals'
 import authenticationAPI from '../../apis/authApi'
 import { Validate } from '../../utils/validate'
 import { useDispatch } from 'react-redux'
-import { addAuth } from '../../redux/reducers/authReducer'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const initValue = {
     fullName: '',
@@ -22,8 +20,6 @@ const SignUpScreen = ({ navigation }: any) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<any>();
     const [isDisable, setIsDisable] = useState(true);
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (

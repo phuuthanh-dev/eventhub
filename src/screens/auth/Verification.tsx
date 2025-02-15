@@ -71,8 +71,6 @@ const Verification = ({ navigation, route }: any) => {
             setLimit(120);
             setCurrentCode(res.data.code);
             setIsLoading(false);
-
-            console.log(res.data.code);
         } catch (error) {
             setIsLoading(false);
             console.log(`Can not send verification code ${error}`);
@@ -134,7 +132,6 @@ const Verification = ({ navigation, route }: any) => {
                             val.length > 0 && ref2.current.focus();
                             handleChangeCode(val, 0);
                         }}
-                        // onChange={() => }
                         placeholder="-"
                     />
                     <TextInput
