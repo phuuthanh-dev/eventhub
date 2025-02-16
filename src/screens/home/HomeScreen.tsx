@@ -1,13 +1,10 @@
-import { View, Text, Button, StatusBar, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, Button, StatusBar, Platform, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { removeAuth } from '../../redux/reducers/authReducer'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
-import { CircleComponent, RowComponent, TextComponent } from '../../components'
-import { HambergerMenu, Notification } from 'iconsax-react-native'
+import { CategoriesList, CircleComponent, EventItem, RowComponent, SectionComponent, SpaceComponent, TagBarComponent, TextComponent } from '../../components'
+import { HambergerMenu, Notification, SearchNormal1, Sort } from 'iconsax-react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { fontFamilies } from '../../constants/fontFamilies'
 
@@ -15,26 +12,12 @@ const HomeScreen = ({ navigation }: any) => {
   const dispatch = useDispatch()
   return (
     <View style={[globalStyles.container]}>
-      {/* <Text>HomeScreen</Text>
-      <Button
-        title="Logout"
-        onPress={async () => {
-          const authData = await AsyncStorage.getItem('auth');
-          if (authData) {
-            const parsedAuth = JSON.parse(authData);
-            parsedAuth.accessToken = '';
-            await AsyncStorage.setItem('auth', JSON.stringify(parsedAuth));
-          }
-          await GoogleSignin.signOut();
-          dispatch(removeAuth({}))
-        }}
-      /> */}
       <StatusBar barStyle={'light-content'} />
 
       <View
         style={{
           backgroundColor: appColors.primary,
-          height: 178 + (Platform.OS === 'ios' ? 16 : 0),
+          height: Platform.OS === 'android' ? 166 : 182,
           borderBottomLeftRadius: 40,
           borderBottomRightRadius: 40,
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 52,
@@ -84,8 +67,103 @@ const HomeScreen = ({ navigation }: any) => {
               </View>
             </CircleComponent>
           </RowComponent>
+          <SpaceComponent height={20} />
+          <RowComponent>
+            <RowComponent
+              styles={{ flex: 1 }}
+              onPress={() =>
+                navigation.navigate('SearchEvents', {
+                  isFilter: false,
+                })
+              }>
+              <SearchNormal1
+                variant="TwoTone"
+                size={22}
+                color={appColors.white}
+              />
+              <View
+                style={{
+                  width: 1,
+                  height: 18,
+                  marginHorizontal: 12,
+                  backgroundColor: '#A29EF0',
+                }}
+              />
+              <TextComponent text="Search..." color={`#A29EF0`} flex={1} />
+            </RowComponent>
+            <RowComponent
+              onPress={() =>
+                navigation.navigate('SearchEvents', {
+                  isFilter: true,
+                })
+              }
+              styles={{
+                backgroundColor: '#5D56F3',
+                paddingHorizontal: 12,
+                paddingVertical: 8,
+                borderRadius: 100,
+              }}>
+              <CircleComponent size={19.3} color={`#A29EF0`}>
+                <Sort size={12} color={appColors.primary} />
+              </CircleComponent>
+              <SpaceComponent width={8} />
+              <TextComponent text="Filters" color={appColors.white} />
+            </RowComponent>
+          </RowComponent>
+          <SpaceComponent height={20} />
+        </View>
+        <View style={{ marginBottom: -16 }}>
+          <CategoriesList isFill />
         </View>
       </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={[
+          {
+            flex: 1,
+            marginTop: Platform.OS === 'ios' ? 22 : 18,
+          },
+        ]}>
+        <SectionComponent styles={{ paddingHorizontal: 0, paddingTop: 24 }}>
+          <TagBarComponent title="Upcoming Events" onPress={() => { }} />
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={Array.from({ length: 5 })}
+            renderItem={({ item }) => <EventItem type="card" item={item} />}
+          />
+        </SectionComponent>
+        <SectionComponent>
+          <ImageBackground
+            source={require('../../assets/images/invite-image.png')}
+            style={{ flex: 1, padding: 16, minHeight: 127 }}
+            imageStyle={{
+              resizeMode: 'cover',
+              borderRadius: 12,
+            }}>
+            <TextComponent text="Invite your friends" title />
+            <TextComponent text="Get $20 for ticket" />
+
+            <RowComponent justify="flex-start">
+              <TouchableOpacity
+                style={[
+                  globalStyles.button,
+                  {
+                    marginTop: 12,
+                    backgroundColor: '#00F8FF',
+                    paddingHorizontal: 28,
+                  },
+                ]}>
+                <TextComponent
+                  text="INVITE"
+                  font={fontFamilies.bold}
+                  color={appColors.white}
+                />
+              </TouchableOpacity>
+            </RowComponent>
+          </ImageBackground>
+        </SectionComponent>
+      </ScrollView>
     </View >
   )
 }

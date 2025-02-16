@@ -54,17 +54,28 @@ export const globalStyles = StyleSheet.create({
   },
 
   tag: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: appColors.white,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: 100,
-    marginRight: 12,
   },
 
   card: {
     padding: 12,
     borderRadius: 12,
     backgroundColor: appColors.white,
-    margin: 12,
+    marginHorizontal: 12,
+    marginVertical: 6,
+  },
+  
+  noSpaceCard: {
+    alignItems: 'center',
+    width: 45,
+    margin: 0,
+    padding: 0,
+    marginVertical: 0,
+    marginHorizontal: 0,
+    marginBottom: 0,
+    height: 45,
+    justifyContent: 'center',
   },
 });

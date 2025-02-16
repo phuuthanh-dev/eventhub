@@ -32,7 +32,7 @@ const SocialLogin = () => {
       const userInfo = await GoogleSignin.signIn();
       const user = userInfo?.data?.user;
       setIsLoading(true);
-
+      
       if (!user) {
         setIsLoading(false);
         return;
@@ -43,6 +43,7 @@ const SocialLogin = () => {
         'post',
       );
 
+      console.log(res);
       dispatch(addAuth(res.data));
       await AsyncStorage.setItem('auth', JSON.stringify(res.data));
       setIsLoading(false);
