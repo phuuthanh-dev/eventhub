@@ -20,13 +20,24 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.eventhub"
+      "package": "com.anonymous.eventhub",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font", "@react-native-google-signin/google-signin"
+      "expo-font",
+      "@react-native-google-signin/google-signin",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "886078313561951",
+          "clientToken": "925e081fb96ce4ff3dbe7b8708135ff8",
+          "displayName": "EventHub",
+          "scheme": "fb886078313561951"
+        }
+      ]
     ]
   }
 }

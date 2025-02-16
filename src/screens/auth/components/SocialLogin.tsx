@@ -9,11 +9,13 @@ import authenticationAPI from '../../../apis/authApi'
 import { useDispatch } from 'react-redux'
 import { addAuth } from '../../../redux/reducers/authReducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Settings, Profile, LoginManager, AccessToken } from 'react-native-fbsdk-next'
 
 GoogleSignin.configure({
   webClientId:
     '400448670928-sdlktvnumohhq05683m54hgee3vu03hb.apps.googleusercontent.com'
 })
+Settings.setAppID('886078313561951')
 
 const SocialLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,26 +31,72 @@ const SocialLogin = () => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const user = userInfo?.data?.user;
-      console.log(user);
       setIsLoading(true);
 
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
       const res: any = await authenticationAPI.HandleAuthentication(
         api,
         user,
         'post',
       );
-      
+
       dispatch(addAuth(res.data));
       await AsyncStorage.setItem('auth', JSON.stringify(res.data));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);  
+      setIsLoading(false);
     }
   }
+  
 
-  const handleLoginWithFacebook = () => {
-    console.log('Login with Facebook')
+  const handleLoginWithFacebook = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile'
+      ]);
+
+      if (result.isCancelled) {
+        console.log('Login cancel');
+      } else {
+        const data = await AccessToken.getCurrentAccessToken();
+        if (!data) {
+          console.log('Something went wrong obtaining access token');
+          return;
+        }
+        console.log(data);
+        
+        const profile = await Profile.getCurrentProfile();
+
+        if (profile) {
+          setIsLoading(true);
+          const data = {
+            name: profile.name,
+            givenName: profile.firstName,
+            familyName: profile.lastName,
+            email: profile.userID,
+            photo: profile.imageURL,
+          };
+
+          const res: any = await authenticationAPI.HandleAuthentication(
+            api,
+            data,
+            'post',
+          );
+
+          dispatch(addAuth(res.data));
+
+          await AsyncStorage.setItem('auth', JSON.stringify(res.data));
+
+          setIsLoading(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

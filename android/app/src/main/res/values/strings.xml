@@ -1,5 +1,8 @@
 <resources>
   <string name="app_name">event-hub</string>
+  <string name="facebook_app_id">886078313561951</string>
+  <string name="fb_login_protocol_scheme">fb886078313561951</string>
+  <string name="facebook_client_token">925e081fb96ce4ff3dbe7b8708135ff8</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
 </resources>
