@@ -1,5 +1,5 @@
 import { View, Text, Button, StatusBar, Platform, TouchableOpacity, ScrollView, FlatList, ImageBackground } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
@@ -7,9 +7,48 @@ import { CategoriesList, CircleComponent, EventItem, RowComponent, SectionCompon
 import { HambergerMenu, Notification, SearchNormal1, Sort } from 'iconsax-react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { fontFamilies } from '../../constants/fontFamilies'
+import GeoLocation from '@react-native-community/geolocation'
+import axios from 'axios'
+import { AddressModel } from '../../models/AddressModel'
 
 const HomeScreen = ({ navigation }: any) => {
+  const [addressInfo, setAddressInfo] = useState<AddressModel>();
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    handleGetCurrentLocation()
+  }, [])
+
+  const handleGetCurrentLocation = async () => {
+    GeoLocation.getCurrentPosition(position => {
+      console.log('position', position);
+      if (position && position.coords) {
+        handleReverseGeocode({
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        });
+      }
+    });
+  };
+
+  const handleReverseGeocode = async ({ lat, long }: {
+    lat: number;
+    long: number;
+  }) => {
+    const api = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${long}&lang=en-US&apiKey=ND_BCtN0BgNSPdQHs6flCyEqiQWpW4zDUx6x7oeZUIY`;
+    await axios
+      .get(api)
+      .then(res => {
+        if (res && res.status === 200 && res.data) {
+          const items = res.data.items
+
+          items.length > 0 && setAddressInfo(items[0]);
+        }
+      })
+      .catch(e => {
+        console.log('Error in getAddressFromCoordinates', e);
+      });
+  };
 
   const itemEvents = [
     {
@@ -118,13 +157,15 @@ const HomeScreen = ({ navigation }: any) => {
                   color={appColors.white}
                 />
               </RowComponent>
-              <TextComponent
-                text="New York, USA"
-                flex={0}
-                color={appColors.white}
-                font={fontFamilies.medium}
-                size={13}
-              />
+              {addressInfo && (
+                <TextComponent
+                  text={`${addressInfo.address.city}, ${addressInfo.address.countryName}`}
+                  flex={0}
+                  color={appColors.white}
+                  font={fontFamilies.medium}
+                  size={13}
+                />
+              )}
             </View>
             <CircleComponent color="#524CE0" size={36}>
               <View>
@@ -243,7 +284,7 @@ const HomeScreen = ({ navigation }: any) => {
             </RowComponent>
           </ImageBackground>
         </SectionComponent>
-        
+
         <SectionComponent styles={{ paddingHorizontal: 0, paddingTop: 24 }}>
           <TabBarComponent title="Nearby You" onPress={() => { }} />
           <FlatList

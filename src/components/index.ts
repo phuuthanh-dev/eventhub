@@ -12,6 +12,7 @@ import TagComponent from "./TagComponent";
 import CardComponent from './CardComponent';
 import EventItem from './EventItem';
 import AvatarGroup from "./AvatarGroup";
+import ChoiceLocation from "./ChoiceLocation";
 
 export {
     SpaceComponent,
@@ -27,5 +28,6 @@ export {
     TagComponent,
     CardComponent,
     EventItem,
-    AvatarGroup
+    AvatarGroup,
+    ChoiceLocation
 }

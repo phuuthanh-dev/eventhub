@@ -1,9 +1,9 @@
-import { View, ImageBackground, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, ImageBackground, ScrollView, SafeAreaView, TouchableOpacity, StatusBar, Platform } from 'react-native'
 import React, { ReactNode } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../styles/globalStyles';
 import { fontFamilies } from '../constants/fontFamilies';
-import { ArrowLeft } from 'iconsax-react-native';
+import { ArrowLeft, Status } from 'iconsax-react-native';
 import { appColors } from '../constants/appColors';
 import RowComponent from './RowComponent';
 import TextComponent from './TextComponent';
@@ -23,7 +23,7 @@ const ContainerComponent = (props: Props) => {
 
     const headerComponent = () => {
         return (
-            <View style={{ flex: 1, paddingTop: 30 }}>
+            <View style={{ flex: 1 }}>
                 {(title || back) && (
                     <RowComponent
                         styles={{
@@ -76,7 +76,12 @@ const ContainerComponent = (props: Props) => {
         </ImageBackground>
     ) : (
         <SafeAreaView style={[globalStyles.container]}>
-            <View>{headerComponent()}</View>
+            <StatusBar barStyle={'dark-content'} />
+            <View style={[
+                globalStyles.container,
+                { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }
+            ]}>{headerComponent()}
+            </View>
         </SafeAreaView>
     )
 }
