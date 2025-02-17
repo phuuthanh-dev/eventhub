@@ -7,6 +7,7 @@ import { appColors } from '../../constants/appColors';
 import { globalStyles } from '../../styles/globalStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { fontFamilies } from '../../constants/fontFamilies';
+import LinearGradient from 'react-native-linear-gradient';
 
 const EventDetail = ({ navigation, route }: any) => {
   const { item }: { item: EventModel } = route.params;
@@ -19,7 +20,7 @@ const EventDetail = ({ navigation, route }: any) => {
         imageStyle={{
           resizeMode: 'cover',
         }}>
-        {/* <LinearGradient colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0)']}> */}
+        <LinearGradient colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0)']}>
           <RowComponent
             styles={{
               padding: 16,
@@ -53,7 +54,7 @@ const EventDetail = ({ navigation, route }: any) => {
               </CardComponent>
             </RowComponent>
           </RowComponent>
-        {/* </LinearGradient> */}
+        </LinearGradient>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
@@ -199,7 +200,7 @@ const EventDetail = ({ navigation, route }: any) => {
         </ScrollView>
       </ImageBackground>
 
-      {/* <LinearGradient
+      <LinearGradient
         colors={['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 1)']}
         style={{
           position: 'absolute',
@@ -225,7 +226,7 @@ const EventDetail = ({ navigation, route }: any) => {
             </View>
           }
         />
-      </LinearGradient> */}
+      </LinearGradient>
     </View>
   )
 }
