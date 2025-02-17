@@ -3,13 +3,91 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
-import { CategoriesList, CircleComponent, EventItem, RowComponent, SectionComponent, SpaceComponent, TagBarComponent, TextComponent } from '../../components'
+import { CategoriesList, CircleComponent, EventItem, RowComponent, SectionComponent, SpaceComponent, TabBarComponent, TextComponent } from '../../components'
 import { HambergerMenu, Notification, SearchNormal1, Sort } from 'iconsax-react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { fontFamilies } from '../../constants/fontFamilies'
 
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useDispatch()
+
+  const itemEvents = [
+    {
+      title: 'International Band Music Concert',
+      description:
+        'Enjoy your favorite dishes and a lovely time with your friends and family. Have a great experience with live music. Food from local food trucks will be available for purchase.',
+      location: {
+        title: 'Gala Convention Center',
+        address: '36 Guild Street, London, UK',
+      },
+      imageUrl: 'https://i.pinimg.com/736x/81/0e/58/810e5804b55b1e536bca5a336c1a08c3.jpg',
+      users: [],
+      authorId: '',
+      startAt: '2025-08-14',
+      endAt: Date.now(),
+      date: Date.now(),
+    },
+    {
+      title: 'Jo Malone London Pop-Up Event',
+      description:
+        'Experience a variety of gourmet dishes and exquisite wines from top chefs and sommeliers.',
+      location: {
+        title: 'Central Park',
+        address: 'New York, USA',
+      },
+      imageUrl: 'https://i.ytimg.com/vi/RSUzD1hrytg/sddefault.jpg',
+      users: [],
+      authorId: '',
+      startAt: '2025-03-17',
+      endAt: Date.now(),
+      date: Date.now(),
+    },
+    {
+      title: 'Chill Afternoon & Study',
+      description:
+        'Relax and unwind with a warm cup of coffee, soothing music, and great company in a cozy atmosphere.',
+      location: {
+        title: 'Cozy Beans Café',
+        address: 'Seattle, USA',
+      },
+      imageUrl: 'https://i.pinimg.com/originals/7d/07/a2/7d07a255678962d30d8717dcf5dbd266.gif',
+      users: [],
+      authorId: '',
+      startAt: '2025-07-25',
+      endAt: Date.now(),
+      date: Date.now(),
+    },
+    {
+      title: 'Bar & Dance Night 2025',
+      description:
+        'Join us for an electrifying night of music, dance, and cocktails at the city’s hottest venue!',
+      location: {
+        title: 'Skyline Lounge & Club',
+        address: 'New York City, USA',
+      },
+      imageUrl: 'https://i.pinimg.com/736x/da/b2/84/dab2846a8be6b98c2add048da972da31.jpg',
+      users: [],
+      authorId: '',
+      startAt: '2025-02-25',
+      endAt: Date.now(),
+      date: Date.now(),
+    },
+    {
+      title: 'Bolero Music Festival 2024',
+      description:
+        'Experience the soulful melodies of Bolero music performed by renowned artists in a mesmerizing atmosphere.',
+      location: {
+        title: 'Hồ Chí Minh City Opera House',
+        address: 'Hồ Chí Minh City, Vietnam',
+      },
+      imageUrl: 'https://i.pinimg.com/736x/da/09/f3/da09f3fc0a419afffdaefc36e148cb0d.jpg',
+      users: [],
+      authorId: '',
+      startAt: '2025-04-29',
+      endAt: Date.now(),
+      date: Date.now(),
+    }
+  ];
   return (
     <View style={[globalStyles.container]}>
       <StatusBar barStyle={'light-content'} />
@@ -125,12 +203,14 @@ const HomeScreen = ({ navigation }: any) => {
           },
         ]}>
         <SectionComponent styles={{ paddingHorizontal: 0, paddingTop: 24 }}>
-          <TagBarComponent title="Upcoming Events" onPress={() => { }} />
+          <TabBarComponent title="Upcoming Events" onPress={() => { }} />
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={Array.from({ length: 5 })}
-            renderItem={({ item }) => <EventItem type="card" item={item} />}
+            data={itemEvents}
+            renderItem={({ item, index }) => (
+              <EventItem key={`event${index}`} type="card" item={item} />
+            )}
           />
         </SectionComponent>
         <SectionComponent>
@@ -141,7 +221,7 @@ const HomeScreen = ({ navigation }: any) => {
               resizeMode: 'cover',
               borderRadius: 12,
             }}>
-            <TextComponent text="Invite your friends" title />
+            <TextComponent styles={{ marginBottom: 6 }} text="Invite your friends" size={20} font={fontFamilies.medium} />
             <TextComponent text="Get $20 for ticket" />
 
             <RowComponent justify="flex-start">
@@ -162,6 +242,18 @@ const HomeScreen = ({ navigation }: any) => {
               </TouchableOpacity>
             </RowComponent>
           </ImageBackground>
+        </SectionComponent>
+        
+        <SectionComponent styles={{ paddingHorizontal: 0, paddingTop: 24 }}>
+          <TabBarComponent title="Nearby You" onPress={() => { }} />
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={itemEvents}
+            renderItem={({ item, index }) => (
+              <EventItem key={`event${index}`} item={item} type="card" />
+            )}
+          />
         </SectionComponent>
       </ScrollView>
     </View >

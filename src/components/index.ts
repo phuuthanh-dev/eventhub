@@ -7,11 +7,11 @@ import SectionComponent from "./SectionComponent";
 import RowComponent from "./RowComponent";
 import CircleComponent from "./CircleComponent";
 import CategoriesList from "./CategoriesList";
-import TagBarComponent from "./TagBarComponent";
+import TabBarComponent from "./TabBarComponent";
 import TagComponent from "./TagComponent";
-import SearchEvents from "../screens/events/SearchEvents";
 import CardComponent from './CardComponent';
 import EventItem from './EventItem';
+import AvatarGroup from "./AvatarGroup";
 
 export {
     SpaceComponent,
@@ -23,9 +23,9 @@ export {
     RowComponent,
     CircleComponent,
     CategoriesList,
-    TagBarComponent,
+    TabBarComponent,
     TagComponent,
-    SearchEvents,
     CardComponent,
-    EventItem
+    EventItem,
+    AvatarGroup
 }
