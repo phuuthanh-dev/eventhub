@@ -9,7 +9,7 @@ import MapboxGL from '@rnmapbox/maps';
 import { appInfo } from '../constants/appInfos';
 import Geolocation from '@react-native-community/geolocation';
 import { Point } from 'geojson';
-MapboxGL.setAccessToken('sk.eyJ1IjoicGh1dXRoYW5oMjAwMyIsImEiOiJjbTc5Y2Z4ODYwM2V1MmpzYnI2cWlwczk4In0.HCFxP4ZSrH1-rxPAAZQcvA');
+MapboxGL.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
 interface Props {
     visible: boolean;
     onClose: () => void;
@@ -37,6 +37,7 @@ const LocationModal = (props: Props) => {
         lat: number;
         long: number;
     }>();
+    
 
     useEffect(() => {
         Geolocation.getCurrentPosition(
@@ -59,26 +60,16 @@ const LocationModal = (props: Props) => {
         );
     }, []);
 
-    // useEffect(() => {
-    //     GeoCoder.from(addressSelected)
-    //         .then(res => {
-    //             const position = res.results[0].geometry.location;
-
-    //             setCurrentLocation({
-    //                 lat: position.lat,
-    //                 long: position.lng,
-    //             });
-    //         })
-    //         .catch(error => console.log(error));
-    // }, [addressSelected]);
     useEffect(() => {
         if (addressSelected) {
             axios
                 .get(
-                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(addressSelected)}.json?access_token=sk.eyJ1IjoicGh1dXRoYW5oMjAwMyIsImEiOiJjbTc5Y2Z4ODYwM2V1MmpzYnI2cWlwczk4In0.HCFxP4ZSrH1-rxPAAZQcvA`
+                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(addressSelected)}.json?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`
                 )
                 .then(res => {
                     const position = res.data.features[0]?.geometry.coordinates;
+                    console.log('position', position);
+                    
 
                     if (position) {
                         setCurrentLocation({
@@ -127,10 +118,12 @@ const LocationModal = (props: Props) => {
     }) => {
         try {
             const res = await axios.get(
-                `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=sk.eyJ1IjoicGh1dXRoYW5oMjAwMyIsImEiOiJjbTc5Y2Z4ODYwM2V1MmpzYnI2cWlwczk4In0.HCFxP4ZSrH1-rxPAAZQcvA`
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`
             );
 
             const address = res.data.features[0]?.place_name || 'Unknown Address';
+            console.log('address', res.data.features[0]);
+            setCurrentLocation({ lat: latitude, long: longitude });
             onSelect({
                 address,
                 postion: { lat: latitude, long: longitude },
@@ -142,13 +135,15 @@ const LocationModal = (props: Props) => {
     };
 
     const goToCurrentLocation = () => {
-        if (cameraRef.current) {
+        if (cameraRef.current && myLocation) {
             cameraRef.current.flyTo(
-                [myLocation?.long ?? 0, myLocation?.lat ?? 0],
+                [myLocation.long, myLocation.lat],
                 1000
             );
         }
     };
+    console.log(addressSelected);
+    
     return (
         <Modal animationType="slide" visible={visible} style={{ flex: 1 }}>
             <View style={{ paddingVertical: 42 }}>
@@ -202,7 +197,6 @@ const LocationModal = (props: Props) => {
                     <ButtonComponent text="Cancel" type="link" onPress={handleClose} />
                 </RowComponent>
                 {currentLocation && (
-
                     <MapboxGL.MapView
                         style={{
                             width: appInfo.sizes.WIDTH,
@@ -212,7 +206,6 @@ const LocationModal = (props: Props) => {
                         }}
                         logoEnabled={false}
                         onPress={(event) => {
-
                             const pointGeometry = event.geometry as Point;
                             const coordinates = {
                                 latitude: pointGeometry.coordinates[1],
@@ -225,13 +218,21 @@ const LocationModal = (props: Props) => {
                             ref={cameraRef}
                             zoomLevel={14}
                             centerCoordinate={[
-                                currentLocation?.long ?? 0,
-                                currentLocation?.lat ?? 0
+                                currentLocation.long ?? 0,
+                                currentLocation.lat ?? 0
                             ]}
                             animationMode="flyTo"
                             animationDuration={1000}
                         />
                         <MapboxGL.UserLocation />
+                        <MapboxGL.MarkerView
+                            coordinate={[
+                                currentLocation.long ?? 0,
+                                currentLocation.lat ?? 0
+                            ]}
+                            anchor={{ x: 0.5, y: 1 }}>
+                            <Location size={32} color={appColors.danger} variant='Bold'/>
+                        </MapboxGL.MarkerView>
                     </MapboxGL.MapView>
                 )}
                 <View

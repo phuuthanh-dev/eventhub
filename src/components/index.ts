@@ -13,6 +13,7 @@ import CardComponent from './CardComponent';
 import EventItem from './EventItem';
 import AvatarGroup from "./AvatarGroup";
 import ChoiceLocation from "./ChoiceLocation";
+import DateTimePicker from "./DateTimePicker";
 
 export {
     SpaceComponent,
@@ -29,5 +30,6 @@ export {
     CardComponent,
     EventItem,
     AvatarGroup,
-    ChoiceLocation
+    ChoiceLocation,
+    DateTimePicker
 }
