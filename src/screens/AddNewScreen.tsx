@@ -93,6 +93,7 @@ const AddNewScreen = ({ navigation }: any) => {
       const storageRef = ref(storage, path);
       const response = await fetch(fileSelected.path);
       const blob = await response.blob();
+      
       const uploadTask = uploadBytesResumable(storageRef, blob);
 
       uploadTask.on(
@@ -106,6 +107,7 @@ const AddNewScreen = ({ navigation }: any) => {
         async () => {
           if (uploadTask.snapshot) {
             const url = await getDownloadURL(uploadTask.snapshot.ref);
+            
             eventData.photo = url;
             handlePushEvent(eventData);
           }
@@ -120,9 +122,15 @@ const AddNewScreen = ({ navigation }: any) => {
     const api = `/add-new`;
     try {
       const res = await eventAPI.HandleEvent(api, event, 'post');
-      navigation.navigate('Explore', {
-        screen: 'HomeScreen',
-      });
+      
+      if (res.status === 200) {
+        setEventData({ ...initValues, authorId: auth.id });
+        setFileSelected(null);
+        setErrorsMess([]);
+        navigation.navigate('Explore', {
+          screen: 'HomeScreen',
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -238,7 +246,7 @@ const AddNewScreen = ({ navigation }: any) => {
           value={eventData.locationTitle}
           onChange={val => handleChangeValue('locationTitle', val)}
         />
-        <ChoiceLocation onSelect={val => handleLocation(val)} />
+        <ChoiceLocation values={eventData} onSelect={val => handleLocation(val)} />
         <InputComponent
           placeholder="Price"
           allowClear

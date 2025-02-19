@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RowComponent from './RowComponent'
 import { globalStyles } from '../styles/globalStyles'
 import TextComponent from './TextComponent'
@@ -8,11 +8,12 @@ import SpaceComponent from './SpaceComponent'
 import { LocationModal } from '../modals'
 
 interface Props {
+  values: any;
   onSelect: (val: any) => void;
 }
 
 const ChoiceLocation = (props: Props) => {
-  const {onSelect} = props;
+  const {onSelect, values} = props;
   const [isVisibleModalLocation, setIsVisibleModalLocation] = useState(false);
   const [addressSelected, setAddressSelected] = useState<{
     address: string;
@@ -21,6 +22,13 @@ const ChoiceLocation = (props: Props) => {
       long: number;
     };
   }>();
+  
+  useEffect(() => {
+    setAddressSelected({
+      address: values.locationAddress
+    });
+  }, [values.locationAddress]);
+  
   return (
     <>
       <RowComponent
@@ -31,7 +39,7 @@ const ChoiceLocation = (props: Props) => {
         <SpaceComponent width={12} />
         <TextComponent
           numberOfLine={1}
-          text={addressSelected ? addressSelected.address : 'Choice'}
+          text={addressSelected?.address ? addressSelected?.address : 'Choice'}
           flex={1}
         />
         <ArrowRight2 color={appColors.primary} size={22} />
