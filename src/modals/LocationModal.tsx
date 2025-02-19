@@ -15,7 +15,7 @@ interface Props {
     onClose: () => void;
     onSelect: (val: {
         address: string;
-        postion?: {
+        position?: {
             lat: number;
             long: number;
         };
@@ -126,7 +126,7 @@ const LocationModal = (props: Props) => {
             setCurrentLocation({ lat: latitude, long: longitude });
             onSelect({
                 address,
-                postion: { lat: latitude, long: longitude },
+                position: { lat: latitude, long: longitude },
             });
             onClose();
         } catch (error) {
@@ -221,7 +221,7 @@ const LocationModal = (props: Props) => {
                                 currentLocation.long ?? 0,
                                 currentLocation.lat ?? 0
                             ]}
-                            animationMode="flyTo"
+                            animationMode="none"
                             animationDuration={1000}
                         />
                         <MapboxGL.UserLocation />
@@ -265,7 +265,7 @@ const LocationModal = (props: Props) => {
                         onPress={() => {
                             onSelect({
                                 address: addressSelected,
-                                postion: currentLocation,
+                                position: currentLocation,
                             });
 
                             onClose();

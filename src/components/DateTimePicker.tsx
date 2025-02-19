@@ -1,12 +1,13 @@
 import { View, Text } from 'react-native';
 import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
-import { RowComponent, TextComponent } from '.';
 import { Calendar, Clock } from 'iconsax-react-native';
 import { appColors } from '../constants/appColors';
 import { globalStyles } from '../styles/globalStyles';
 import { fontFamilies } from '../constants/fontFamilies';
 import { DateTime } from '../utils/DateTime';
+import TextComponent from './TextComponent';
+import RowComponent from './RowComponent';
 
 interface Props {
     selected?: Date;

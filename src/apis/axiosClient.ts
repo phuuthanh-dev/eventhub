@@ -1,6 +1,13 @@
 import axios from "axios";
 import { appInfo } from "../constants/appInfos";
 import queryString from "query-string";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const getAccessToken = async () => {
+  const res = await AsyncStorage.getItem("auth");
+  
+  return res ? JSON.parse(res).accessToken : "";
+}
 
 const axiosClient = axios.create({
   baseURL: appInfo.BASE_URL,
@@ -8,8 +15,9 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config: any) => {
+  const accessToken = await getAccessToken();
   config.headers = {
-    Authorization: "",
+    Authorization: accessToken ? `Bearer ${accessToken}` : "",
     Accept: "application/json",
     ...config.headers,
   };

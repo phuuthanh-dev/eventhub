@@ -5,7 +5,7 @@ import TextComponent from './TextComponent'
 import { ArrowRight2, Location } from 'iconsax-react-native'
 import { appColors } from '../constants/appColors'
 import SpaceComponent from './SpaceComponent'
-import LocationModal from '../modals/LocationModal'
+import { LocationModal } from '../modals'
 
 interface Props {
   onSelect: (val: any) => void;

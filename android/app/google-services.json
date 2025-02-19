@@ -1,26 +1,87 @@
 {
   "project_info": {
-    "project_number": "245818175550",
-    "project_id": "eventhub-f3483",
-    "storage_bucket": "eventhub-f3483.firebasestorage.app"
+    "project_number": "916091849885",
+    "project_id": "fir-7940a",
+    "storage_bucket": "fir-7940a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:245818175550:android:bc5aeb3bd0e04732d3616f",
+        "mobilesdk_app_id": "1:916091849885:android:1d663677170db654edd874",
         "android_client_info": {
           "package_name": "com.anonymous.eventhub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "916091849885-c4dknsjitck1brtfiafkkv5ivkboj4rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBdLhCARCaBE5FdXeKddlIirsea_7zIimw"
+          "current_key": "AIzaSyCHOETQ82PHOAbOpUY66ROxAZLdD3iXDE4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916091849885-c4dknsjitck1brtfiafkkv5ivkboj4rt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "916091849885-jn5kik7rg7rj514qeb71ahoenn1spun9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "moneymind"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916091849885:android:67589cb54a1004efedd874",
+        "android_client_info": {
+          "package_name": "com.company.moneymind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916091849885-obaup49u55pejet0283eilcdscnqji7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.moneymind",
+            "certificate_hash": "76e9872141b6eff8325b813db9316a894ee88ce2"
+          }
+        },
+        {
+          "client_id": "916091849885-c4dknsjitck1brtfiafkkv5ivkboj4rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHOETQ82PHOAbOpUY66ROxAZLdD3iXDE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916091849885-c4dknsjitck1brtfiafkkv5ivkboj4rt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "916091849885-jn5kik7rg7rj514qeb71ahoenn1spun9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "moneymind"
+              }
+            }
+          ]
         }
       }
     }
