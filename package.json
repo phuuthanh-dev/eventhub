@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@goongmaps/goong-map-react": "^1.1.2",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/geolocation": "^3.4.0",
     "@react-native-firebase/app": "^21.10.0",
@@ -25,7 +26,9 @@
     "expo": "~52.0.33",
     "expo-font": "~13.0.3",
     "expo-status-bar": "~2.0.1",
+    "i": "^0.3.7",
     "iconsax-react-native": "^0.0.8",
+    "npm": "^11.1.0",
     "query-string": "^9.1.1",
     "react": "18.3.1",
     "react-native": "0.76.7",

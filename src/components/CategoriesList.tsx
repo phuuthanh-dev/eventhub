@@ -2,7 +2,7 @@ import { FlatList } from 'react-native';
 import React, { ReactNode } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { appColors } from '../constants/appColors';
-import { ChefFork } from '../assets/svgs';
+import { KnifeFork, KnifeFork_Color } from '../assets/svgs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import TagComponent from './TagComponent';
 
@@ -47,7 +47,11 @@ const CategoriesList = (props: Props) => {
     },
     {
       key: 'food',
-      icon: <ChefFork color={isFill ? appColors.white : '#29D697'} />,
+      icon: isFill ? (
+        <KnifeFork color={isFill ? appColors.white : '#29D697'} />
+      ) : (
+        <KnifeFork_Color color={isFill ? appColors.white : '#29D697'} />
+      ),
       color: '#29D697',
       label: 'Food',
     },
@@ -81,6 +85,7 @@ const CategoriesList = (props: Props) => {
           onPress={() => { }}
           icon={item.icon}
           label={item.label}
+          textColor={isFill ? appColors.white : appColors.text2}
         />}
     />
   );

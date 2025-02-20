@@ -15,6 +15,7 @@ import AvatarGroup from "./AvatarGroup";
 import ChoiceLocation from "./ChoiceLocation";
 import DateTimePicker from "./DateTimePicker";
 import DropdownPicker from "./DropdownPicker";
+import MarkerCustom from "./MarkerCustom";
 
 export {
     SpaceComponent,
@@ -33,5 +34,6 @@ export {
     AvatarGroup,
     ChoiceLocation,
     DateTimePicker,
-    DropdownPicker
+    DropdownPicker,
+    MarkerCustom
 }
