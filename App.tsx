@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SplashScreen from './src/screens/SplashScreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { LogBox, StatusBar } from 'react-native'

@@ -52,9 +52,7 @@ const DropdownPicker = (props: Props) => {
                 data.splice(index, 1);
             }
 
-            console.log('data', data);
             setSelectedItems(data);
-            console.log('data', selectedItems);
         } else {
             setSelectedItems([...selectedItems, id]);
         }
@@ -73,8 +71,6 @@ const DropdownPicker = (props: Props) => {
                 <SpaceComponent width={8} />
                 <TouchableOpacity
                     onPress={() => {
-                        console.log(selectedItems);
-
                         handleSelectItem(id);
                         onSelect(selectedItems);
                     }}>

@@ -12,6 +12,7 @@ import axios from 'axios'
 import { AddressModel } from '../../models/AddressModel'
 import { EventModel } from '../../models/EventModel'
 import eventAPI from '../../apis/eventApi'
+import { HandleNotification } from '../../utils/handleNotification'
 
 const HomeScreen = ({ navigation }: any) => {
   const [currentLocation, setCurrentLocation] = useState<AddressModel>();
@@ -21,6 +22,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [eventData, setEventData] = useState<EventModel[]>([]);
 
   useEffect(() => {
+    HandleNotification.checkNotificationPerson()
     handleGetCurrentLocation()
     getEvents()
     getEventsData()
@@ -73,7 +75,7 @@ const HomeScreen = ({ navigation }: any) => {
       }&limit=5&isUpcoming=true`
       : `/get-events?limit=5&isUpcoming=true`
       }`;
-      //&date=${new Date().toISOString()}`;
+    //&date=${new Date().toISOString()}`;
 
     if (events.length === 0 || nearbyEvents.length === 0) {
       setIsLoading(true);

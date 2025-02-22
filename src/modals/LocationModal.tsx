@@ -122,7 +122,6 @@ const LocationModal = (props: Props) => {
             );
 
             const address = res.data.features[0]?.place_name || 'Unknown Address';
-            console.log('address', res.data.features[0]);
             setCurrentLocation({ lat: latitude, long: longitude });
             onSelect({
                 address,
