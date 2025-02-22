@@ -61,6 +61,7 @@ const MapScreen = ({ navigation }: any) => {
       <StatusBar barStyle="dark-content" />
       {currentLocation ? (
         <MapboxGL.MapView
+          styleURL={MapboxGL.StyleURL.Outdoors}
           style={{
             width: appInfo.sizes.WIDTH,
             height: appInfo.sizes.HEIGHT
@@ -89,14 +90,14 @@ const MapScreen = ({ navigation }: any) => {
           {events.length > 0 &&
             events.map((event, index) => (
               <MapboxGL.MarkerView
+                key={`event-${index}`}
                 id="marker"
                 coordinate={[
                   event.position.long,
                   event.position.lat
                 ]}
-                key={index}
               >
-                <MarkerCustom type='sport' />
+                  <MarkerCustom type="sport" onPress={() => console.log('Marker pressed:', event.title)} />
               </MapboxGL.MarkerView>
             ))}
         </MapboxGL.MapView>
@@ -148,17 +149,17 @@ const MapScreen = ({ navigation }: any) => {
       <View
         style={{
           position: 'absolute',
-          bottom: 10,
+          bottom: 20,
           right: 0,
           left: 0,
         }}>
-        {/* <FlatList
+        <FlatList
           initialScrollIndex={0}
           data={events}
           renderItem={({ item }) => <EventItem item={item} type="list" />}
           horizontal
           showsHorizontalScrollIndicator={false}
-        /> */}
+        />
       </View>
     </View>
   )

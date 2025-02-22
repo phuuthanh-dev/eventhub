@@ -101,4 +101,9 @@ export const globalStyles = StyleSheet.create({
       // paddingHorizontal: 14,
       color: appColors.text,
   },
+  
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

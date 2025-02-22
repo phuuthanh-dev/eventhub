@@ -16,7 +16,8 @@ import ChoiceLocation from "./ChoiceLocation";
 import DateTimePicker from "./DateTimePicker";
 import DropdownPicker from "./DropdownPicker";
 import MarkerCustom from "./MarkerCustom";
-
+import RadioButtons from "./RadioButtons";
+import LoadingComponent from "./LoadingComponent";
 export {
     SpaceComponent,
     TextComponent,
@@ -35,5 +36,7 @@ export {
     ChoiceLocation,
     DateTimePicker,
     DropdownPicker,
-    MarkerCustom
+    MarkerCustom,
+    RadioButtons,
+    LoadingComponent,
 }

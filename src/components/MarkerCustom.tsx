@@ -1,4 +1,4 @@
-import { ImageBackground } from 'react-native';
+import { ImageBackground, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { globalStyles } from '../styles/globalStyles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -7,10 +7,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface Props {
     type: string;
+    onPress?: () => void;
 }
 
 const MarkerCustom = (props: Props) => {
-    const { type } = props;
+    const { type, onPress } = props;
 
     const renderIcon = (type: string) => {
         let icon;
@@ -36,25 +37,27 @@ const MarkerCustom = (props: Props) => {
         return icon;
     };
     return (
-        <ImageBackground
-            source={require('../assets/images/Union.png')}
-            style={[
-                globalStyles.shadow,
-                {
+        <TouchableOpacity onPress={onPress}>
+            <ImageBackground
+                source={require('../assets/images/Union.png')}
+                style={[
+                    globalStyles.shadow,
+                    {
+                        width: 56,
+                        height: 56,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingBottom: 4,
+                    },
+                ]}
+                imageStyle={{
+                    resizeMode: 'contain',
                     width: 56,
                     height: 56,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingBottom: 4,
-                },
-            ]}
-            imageStyle={{
-                resizeMode: 'contain',
-                width: 56,
-                height: 56,
-            }}>
-            {renderIcon(type)}
-        </ImageBackground>
+                }}>
+                {renderIcon(type)}
+            </ImageBackground>
+        </TouchableOpacity>
     );
 };
 

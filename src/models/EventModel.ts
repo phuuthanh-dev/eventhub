@@ -8,14 +8,16 @@ export interface EventModel {
   endAt: number;
   locationAddress: string;
   locationTitle: string;
-  photoUrl: string;
+  photo: string;
   position: Position;
   price: string;
   date: number;
   startAt: number;
   title: string;
   updatedAt: string;
-  users: any[];
+  users: string[];
+  followers?: string[];
+  joined: string[];
 }
 
 export interface Position {
