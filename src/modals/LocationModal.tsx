@@ -68,8 +68,6 @@ const LocationModal = (props: Props) => {
                 )
                 .then(res => {
                     const position = res.data.features[0]?.geometry.coordinates;
-                    console.log('position', position);
-                    
 
                     if (position) {
                         setCurrentLocation({

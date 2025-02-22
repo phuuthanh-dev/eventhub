@@ -5,7 +5,7 @@ import { fontFamilies } from '../constants/fontFamilies';
 import { globalStyles } from '../styles/globalStyles';
 
 interface Props {
-    text: string;
+    text?: string;
     color?: string;
     size?: number;
     flex?: number;

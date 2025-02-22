@@ -13,6 +13,8 @@ import { AddressModel } from '../../models/AddressModel'
 import { EventModel } from '../../models/EventModel'
 import eventAPI from '../../apis/eventApi'
 import { HandleNotification } from '../../utils/handleNotification'
+import messaging from '@react-native-firebase/messaging'
+import Toast from 'react-native-toast-message'
 
 const HomeScreen = ({ navigation }: any) => {
   const [currentLocation, setCurrentLocation] = useState<AddressModel>();
@@ -26,6 +28,17 @@ const HomeScreen = ({ navigation }: any) => {
     handleGetCurrentLocation()
     getEvents()
     getEventsData()
+
+    messaging().onMessage(async (mess: any) => {
+      Toast.show({
+        text1: mess.notification.title,
+        text2: mess.notification.body,
+        onPress: () => {
+          const id = mess.data ? mess.data.eventId : '';
+          id && navigation.navigate('EventDetail', { id });
+        },
+      });
+    });
   }, [])
 
   useEffect(() => {

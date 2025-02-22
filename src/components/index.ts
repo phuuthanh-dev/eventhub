@@ -18,6 +18,7 @@ import DropdownPicker from "./DropdownPicker";
 import MarkerCustom from "./MarkerCustom";
 import RadioButtons from "./RadioButtons";
 import LoadingComponent from "./LoadingComponent";
+import AvatarComponent from "./AvatarComponent";
 export {
     SpaceComponent,
     TextComponent,
@@ -39,4 +40,5 @@ export {
     MarkerCustom,
     RadioButtons,
     LoadingComponent,
+    AvatarComponent
 }

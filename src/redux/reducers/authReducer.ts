@@ -4,10 +4,11 @@ export interface AuthState {
   id: string;
   email: string;
   accessToken: string;
+  fullName?: string;
   follow_events: string[];
   fcmTokens?: string[];
   following?: string[];
-  photoUrl?: string;
+  photo?: string;
 }
 
 const initialState: AuthState = {
@@ -36,7 +37,7 @@ const authSlice = createSlice({
       state.authData.following = action.payload;
     },
     addPhotoUrl: (state, action) => {
-      state.authData.photoUrl = action.payload;
+      state.authData.photo = action.payload;
     },
   },
 });

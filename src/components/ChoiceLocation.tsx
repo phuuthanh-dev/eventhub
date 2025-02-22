@@ -5,7 +5,7 @@ import TextComponent from './TextComponent'
 import { ArrowRight2, Location } from 'iconsax-react-native'
 import { appColors } from '../constants/appColors'
 import SpaceComponent from './SpaceComponent'
-import { LocationModal } from '../modals'
+import LocationModal from '../modals/LocationModal'
 
 interface Props {
   values: any;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ChoiceLocation = (props: Props) => {
-  const {onSelect, values} = props;
+  const { onSelect, values } = props;
   const [isVisibleModalLocation, setIsVisibleModalLocation] = useState(false);
   const [addressSelected, setAddressSelected] = useState<{
     address: string;
@@ -22,13 +22,13 @@ const ChoiceLocation = (props: Props) => {
       long: number;
     };
   }>();
-  
+
   useEffect(() => {
     setAddressSelected({
       address: values.locationAddress
     });
   }, [values.locationAddress]);
-  
+
   return (
     <>
       <RowComponent
