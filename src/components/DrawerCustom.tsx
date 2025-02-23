@@ -1,15 +1,13 @@
 import {
     View,
-    Text,
     StyleSheet,
     Platform,
     StatusBar,
     TouchableOpacity,
-    Image,
     FlatList,
 } from 'react-native';
 import React from 'react';
-import { RowComponent, SpaceComponent, TextComponent } from '.';
+import { AvatarComponent, RowComponent, SpaceComponent, TextComponent } from '.';
 import { globalStyles } from '../styles/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -118,29 +116,11 @@ const DrawerCustom = ({ navigation }: any) => {
 
     return (
         <View style={[localStyles.container]}>
-            <TouchableOpacity
-                onPress={() => handleNavigate('MyProfile')}>
-                {auth.photo ? (
-                    <Image source={{ uri: auth.photo }} style={[localStyles.avatar]} />
-                ) : (
-                    <View
-                        style={[localStyles.avatar, { backgroundColor: appColors.gray2 }]}>
-                        <TextComponent
-                            title
-                            size={22}
-                            color={appColors.white}
-                            text={
-                                auth.fullName
-                                    ? auth.fullName
-                                        .split(' ')
-                                    [auth.fullName.split(' ').length - 1].substring(0, 1)
-                                    : ''
-                            }
-                        />
-                    </View>
-                )}
-                <TextComponent text={auth.fullName} title size={18} />
-            </TouchableOpacity>
+            <AvatarComponent
+                onPress={() => handleNavigate('MyProfile')}
+                photoURL={auth.photo}
+                name={auth.fullName ? auth.fullName : auth.email}
+            />
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={profileMenu}

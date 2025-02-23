@@ -9,6 +9,8 @@ import { appColors } from '../../constants/appColors';
 import { globalStyles } from '../../styles/globalStyles';
 import { ProfileModel } from '../../models/ProfileModel';
 import userAPI from '../../apis/userApi';
+import AboutProfile from './components/AboutProfile';
+import EditProfile from './components/EditProfile';
 
 const ProfileScreen = ({ navigation, route }: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,14 +19,14 @@ const ProfileScreen = ({ navigation, route }: any) => {
   const [userFollowers, setUserFollowers] = useState<string[]>([]);
   const dispatch = useDispatch();
   const auth: AuthState = useSelector(authSelector)
-
-
+  
   useEffect(() => {
     if (route.params) {
       const { id } = route.params;
+      
       setProfileId(id);
 
-      if (route.params.isUpdated) {
+      if (profileId && route.params.isUpdated) {
         getProfile();
       }
     } else {
@@ -60,14 +62,14 @@ const ProfileScreen = ({ navigation, route }: any) => {
 
     try {
       const res = await userAPI.HandleUser(api);
+      
       setUserFollowers(res.data);
     } catch (error) {
       console.log();
     }
   };
-
+  
   return (
-
     <ContainerComponent
       back
       title={route.params ? '' : 'Profile'}
@@ -134,11 +136,11 @@ const ProfileScreen = ({ navigation, route }: any) => {
               </View>
             </RowComponent>
           </SectionComponent>
-          {/* {auth.id !== profileId ? (
+          {auth.id !== profileId ? (
             <AboutProfile profile={profile} />
           ) : (
             <EditProfile profile={profile} />
-          )} */}
+          )}
         </>
       ) : (
         <TextComponent text="profile not found!" />

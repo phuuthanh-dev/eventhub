@@ -22,7 +22,7 @@ export class UserHandle {
   };
 
   static getFollowingByUid = async (id: string, dispatch: any) => {
-    const api = `/get-follwings?uid=${id}`;
+    const api = `/get-followings?uid=${id}`;
 
     try {
       const res = await userAPI.HandleUser(api);
