@@ -1,15 +1,17 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { ProfileModel } from '../../../models/ProfileModel';
 import { RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../../../components';
 import { globalStyles } from '../../../styles/globalStyles';
 import { appColors } from '../../../constants/appColors';
 import { useDispatch, useSelector } from 'react-redux';
-import { authSelector } from '../../../redux/reducers/authReducer';
+import { authSelector, updateFollowing } from '../../../redux/reducers/authReducer';
 import { fontFamilies } from '../../../constants/fontFamilies';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LoadingModal } from '../../../modals';
+import userAPI from '../../../apis/userApi';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
     profile: ProfileModel;
@@ -36,6 +38,7 @@ const AboutProfile = (props: Props) => {
     ];
     const auth = useSelector(authSelector);
     const dispatch = useDispatch();
+    const navigation: any = useNavigation();
 
     const renderTabContent = (id: string) => {
         let content = <></>;
@@ -48,7 +51,6 @@ const AboutProfile = (props: Props) => {
                     </>
                 );
                 break;
-
             default:
                 content = <></>;
                 break;
@@ -56,12 +58,33 @@ const AboutProfile = (props: Props) => {
         return content;
     };
 
+    const handleToggleFollowing = async () => {
+        const api = `/update-following`;
+
+        setIsLoading(true);
+        try {
+            const res = await userAPI.HandleUser(
+                api,
+                {
+                    uid: auth.id,
+                    authorId: profile.uid,
+                },
+                'put',
+            );
+            dispatch(updateFollowing(res.data));
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
             <SectionComponent>
                 <RowComponent>
                     <TouchableOpacity
-                        // onPress={handleToggleFollowing}
+                        onPress={handleToggleFollowing}
                         style={[
                             globalStyles.button,
                             { flex: 1, backgroundColor: appColors.primary },

@@ -19,11 +19,11 @@ const ProfileScreen = ({ navigation, route }: any) => {
   const [userFollowers, setUserFollowers] = useState<string[]>([]);
   const dispatch = useDispatch();
   const auth: AuthState = useSelector(authSelector)
-  
+
   useEffect(() => {
     if (route.params) {
       const { id } = route.params;
-      
+
       setProfileId(id);
 
       if (profileId && route.params.isUpdated) {
@@ -40,14 +40,14 @@ const ProfileScreen = ({ navigation, route }: any) => {
       getFollowersByUid();
     }
   }, [profileId]);
-
-
+  
   const getProfile = async () => {
     const api = `/get-profile?uid=${profileId}`;
 
     setIsLoading(true);
     try {
       const res = await userAPI.HandleUser(api);
+      
       res && res.data && setProfile(res.data);
 
       setIsLoading(false);
@@ -62,13 +62,13 @@ const ProfileScreen = ({ navigation, route }: any) => {
 
     try {
       const res = await userAPI.HandleUser(api);
-      
+
       setUserFollowers(res.data);
     } catch (error) {
       console.log();
     }
   };
-  
+
   return (
     <ContainerComponent
       back
@@ -137,7 +137,7 @@ const ProfileScreen = ({ navigation, route }: any) => {
             </RowComponent>
           </SectionComponent>
           {auth.id !== profileId ? (
-            <AboutProfile profile={profile} />
+            <AboutProfile profile={profile}/>
           ) : (
             <EditProfile profile={profile} />
           )}
